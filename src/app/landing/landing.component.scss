@@ -1,0 +1,134 @@
+@use "../../variables.scss" as vars;
+
+header {
+  padding-left: 10px;
+  padding-top: 10px;
+
+  .logo-container {
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
+
+    border: 1px solid #fff;
+    border-radius: 12px;
+    // background-color: #ffffff33;
+    img {
+      width: 40px;
+    }
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: vars.$light-green;
+    }
+  }
+}
+
+section {
+  padding: 10px 10px;
+
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 2.5rem;
+    color: vars.$light-green;
+  }
+
+  .description {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.1rem;
+    padding: 5px 0px;
+    color: vars.$light-green;
+  }
+
+  .plans {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0px;
+    gap: 40px;
+
+    border: 2px solid #fff;
+    border-radius: 12px;
+    div {
+      padding: 5px 10px;
+      cursor: pointer;
+      p {
+        font-size: 0.9rem;
+        font-weight: 300;
+        text-align: center;
+        color: vars.$light-green;
+      }
+    }
+
+    .selected {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: vars.$red;
+    }
+  }
+
+  form {
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+
+      label {
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 12px;
+
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        i {
+          font-size: 20px;
+        }
+      }
+
+      input {
+        height: 25px;
+      }
+    }
+
+    input,
+    textarea,
+    .custom-file-upload {
+      border: 2px solid vars.$light-green !important;
+      border-radius: 8px !important;
+      padding: 5px !important;
+      background-color: vars.$input-color !important;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .custom-file-upload {
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: vars.$red;
+      border-radius: 10px;
+      font-size: 18px;
+      color: vars.$light-green;
+      font-weight: 600;
+    }
+  }
+}

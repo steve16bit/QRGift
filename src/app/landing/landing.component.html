@@ -1,0 +1,109 @@
+<header>
+  <div class="logo-container">
+    <img src="../../assets/images/qrgift-logo.svg"/>
+    <h2>QR Gift</h2>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h1 class="hero-title">Surpreenda alguém nesse natal</h1>
+    <p class="description">
+      Presenteie quem você ama neste natal. Use o formulário abaixo e receba um QR Code para uma página única com a sua mensagem.
+    </p>
+  
+    <div class="plans">
+      <div [ngClass]="{ selected: selectedPlan === 1 }" (click)="changePlan(1)">
+        <p>Fotos, mensagem, música - <b>R$19,99</b></p>
+      </div>
+      <div [ngClass]="{ selected: selectedPlan === 2 }" (click)="changePlan(2)">
+        <p>Fotos, mensagem, áudio ou música - <b>R$39,99</b></p>
+      </div>
+    </div>
+  
+    <form [formGroup]="formGroup">
+      <div class="input-container">
+        <label>De:</label>
+        <input formControlName="from" placeholder="Seu nome" type="text" />
+      </div>
+      <div class="input-container">
+        <label>Para:</label>
+        <input
+          formControlName="to"
+          placeholder="Para quem você quer escrever"
+          type="text"
+        />
+      </div>
+      <div class="input-container">
+        <label>E-mail:</label>
+        <input
+          formControlName="email"
+          placeholder="Digite seu melhor email"
+          type="text"
+        />
+      </div>
+      <div class="input-container">
+        <label>Link YouTube:</label>
+        <input
+          formControlName="linkYoutube"
+          placeholder="Escolha uma linda música"
+          type="text"
+        />
+      </div>
+      <div class="input-container">
+        <label>Ano:</label>
+        <ng-select
+          [items]="years"
+          bindLabel="name"
+          bindValue="value"
+          placeholder="Ano do natal"
+          (change)="changeYear($event)"
+        ></ng-select>
+      </div>
+      <div class="input-container">
+        <label>Mensagem:</label>
+        <textarea
+          formControlName="message"
+          [rows]="5"
+          placeholder="Escreva sua mensagem para alguém especial. 🎄🌟"
+        ></textarea>
+      </div>
+  
+      <div class="input-container">
+        <label for="picture" class="custom-file-upload">
+          <i class="bx bx-camera"></i>
+          Escolha até 3 fotos
+        </label>
+        <input
+          formControlName="pictures"
+          type="file"
+          accept="image/*"
+          multiple
+          id="picture"
+          (change)="changePicture($event)"
+        />
+      </div>
+  
+      <button type="submit" class="submit-button">Gerar minha página</button>
+    </form>
+  </section>
+  <section>
+    <h1>Como ficará sua mensagem</h1>
+    <div class="preview-container">
+      <h2>Natal de {{selectedYear}}</h2>
+      <div class="image-wrapper">
+        <img src="pegar imagem do usuario"/>
+      </div>
+      <div class="message-wrapper">
+        <p>{{message}}</p>
+      </div>
+      <div class="audio-wrapper">
+        <audio controls>
+          <source src="horse.ogg" type="audio/ogg">
+          <source src="horse.mp3" type="audio/mpeg">
+          Your browser does not support the audio tag.
+        </audio>
+      </div>
+    </div>
+  </section>
+</main>
