@@ -1,4 +1,23 @@
 @use "../../variables.scss" as vars;
+.swiper-container {
+  width: 100%; /* Ajuste conforme necessário */
+  height: 300px; /* Ajuste conforme necessário */
+}
+
+.swiper-slide {
+  display: flex; /* Para centralizar o conteúdo */
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 100%; /* Ajuste conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+main {
+  padding: 10px;
+}
 
 header {
   padding-left: 10px;
@@ -27,7 +46,7 @@ header {
 }
 
 section {
-  padding: 10px 10px;
+  // padding: 10px 10px;
 
   .hero-title {
     font-size: 2.5rem;
@@ -112,6 +131,13 @@ section {
       display: none;
     }
 
+    .errorMessage {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: vars.$red;
+    }
+
     .custom-file-upload {
       height: 25px;
       display: flex;
@@ -129,6 +155,109 @@ section {
       font-size: 18px;
       color: vars.$light-green;
       font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
+
+#preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px;
+
+  h1 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    line-height: 1.1rem;
+    color: vars.$light-green;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .preview-container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 10px;
+
+    border-radius: 10px;
+    background-color: vars.$light-green;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      line-height: 1.5rem;
+      margin: 10px 0px;
+      
+      text-align: center;
+      color: vars.$red;
+    }
+
+    .image-wrapper {
+      border-radius: 15px;
+      img {
+        border-radius: 15px;
+      }
+    }
+
+    .image-placeholder {
+      height: 600px;
+      width: 95%;
+      border-radius: 15px;
+      background-color: #B9DECB;
+    }
+
+    .message-wrapper {
+      text-align: center;
+      color: vars.$dark-green;
+      width: 90%;
+
+      p {
+        word-wrap: break-word;
+      }
+    }
+
+    .audio-wrapper {
+      width: 100%;
+      visibility: hidden;
+      audio {
+        width: 100%;
+        border-radius: 20px !important;
+      }
+
+      audio::-webkit-media-controls-panel {
+        background-color: vars.$medium-green !important;
+      }
+
+      .audioPlayer {
+        display: block;
+        border-radius: 20px;
+        margin:0 auto;
+      }
+
+      audio::-webkit-media-controls-mute-button,
+      audio::-webkit-media-controls-play-button,
+      audio::-webkit-media-controls-timeline-container,
+      audio::-webkit-media-controls-current-time-display,
+      audio::-webkit-media-controls-time-remaining-display,
+      audio::-webkit-media-controls-timeline,
+      audio::-webkit-media-controls-volume-slider-container,
+      audio::-webkit-media-controls-volume-slider,
+      audio::-webkit-media-controls-seek-back-button,
+      audio::-webkit-media-controls-seek-forward-button,
+      audio::-webkit-media-controls-fullscreen-button,
+      audio::-webkit-media-controls-rewind-button,
+      audio::-webkit-media-controls-return-to-realtime-button,
+      audio::-webkit-media-controls-toggle-closed-captions-button {
+        color: vars.$light-green;
+      }
     }
   }
 }

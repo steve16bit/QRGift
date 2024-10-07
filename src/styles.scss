@@ -1,5 +1,7 @@
 @use "variables" as vars;
-@import url(@ng-select/ng-select/themes/default.theme.css);
+@import '@ng-select/ng-select/themes/default.theme.css';
+// styles.scss ou styles.css
+
 
 * {
   margin: 0;
@@ -78,4 +80,17 @@ button {
 
 .ng-select .ng-select-container .ng-value-container {
   padding-left: 0;
+}
+
+
+::ng-deep .ng-select.ng-select-single .ng-select-container {
+  border: vars.$border-light-green;
+  border-radius: 8px !important;
+  padding: 5px !important;
+  background-color: vars.$input-color !important;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items {
+  border: vars.$border-light-green;
+  background-color: vars.$input-color !important;
 }
