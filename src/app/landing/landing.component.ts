@@ -209,8 +209,8 @@ export class LandingComponent {
     formData.append('Message', this.formGroup.get('message')?.value);
     formData.append('AudioMessage', this.audio); // Supondo que `audio` é um array de arquivos
     formData.append('MusicURL', this.formGroup.get('linkYoutube')?.value);
-    formData.append('PlanType', this.selectedPlan.toString());
-    formData.append('HolidayTypeId', '1'); // Se você tiver um ID fixo ou precisar ajustar
+    formData.append('PlanTypeId', this.selectedPlan === 1 ? 'fPc2A1kLIdhdBFKPXyfz' : 'tGgt5gMYGomx5Ld1UfA');
+    formData.append('HolidayTypeId', 'lAj5OCzjdTMGTHrTDOiE'); // Se você tiver um ID fixo ou precisar ajustar
     this.images.forEach((image: File, index) => {
       formData.append('GiftWebSiteImages', image);
     }); // Aqui é onde você adiciona as imagens

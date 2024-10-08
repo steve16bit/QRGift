@@ -7,8 +7,8 @@ import type { Observable } from 'rxjs';
 })
 export class QrGiftApiService {
 
-  // private apiUrl = 'https://qrgiftapi-fycqerfehrfmgjff.brazilsouth-01.azurewebsites.net/api';
-  private apiUrl = 'https://localhost:7218/api';
+  private apiUrl = 'https://qrgiftapi-fycqerfehrfmgjff.brazilsouth-01.azurewebsites.net/api';
+  // private apiUrl = 'https://localhost:7218/api';
 
   constructor(private httpClient: HttpClient) { }
 
