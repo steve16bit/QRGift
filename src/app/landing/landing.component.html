@@ -55,7 +55,7 @@
           >
         </div>
       </div>
-      <div class="input-container">
+      <!-- <div class="input-container">
         <label>E-mail:</label>
         <input
           formControlName="email"
@@ -73,8 +73,8 @@
             >Este campo é obrigatório.</span
           >
         </div>
-      </div>
-      <div class="input-container">
+      </div> -->
+      <div class="input-container" >
         <label>Link YouTube:</label>
         <input
           formControlName="linkYoutube"
@@ -123,6 +123,7 @@
           [rows]="5"
           placeholder="Escreva sua mensagem para alguém especial. 🎄🌟"
           (keydown)="chageMessage($event)"
+          (change)="chageMessage($event)"
         ></textarea>
         <div
           *ngIf="
@@ -166,7 +167,7 @@
         </div>
       </div>
 
-      <div class="input-container">
+      <div class="input-container" *ngIf="selectedPlan !== 1">
         <label for="audio" class="custom-file-upload">
           <i class="bx bx-microphone"></i>
           Mensagem de audio

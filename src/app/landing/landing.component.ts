@@ -55,12 +55,12 @@ export class LandingComponent {
     this.formGroup = this.fb.group({
       from: ['', Validators.required],
       to: ['', Validators.required],
-      email: ['', Validators.required],
+      // email: ['', Validators.required],
       message: ['', Validators.required],
       year: ['', Validators.required],
       linkYoutube: ['', Validators.required],
       pictures: ['', Validators.required],
-      audio: ['', Validators.required],
+      audio: ['', this.selectedPlan === 1 ? null : Validators.required],
     });
   }
 

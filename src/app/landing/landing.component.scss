@@ -17,6 +17,52 @@ img {
 
 main {
   padding: 10px;
+
+  @media (min-width: 769px) {
+    padding: 10px 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    section .plans {
+      width: fit-content;
+    }
+    #preview {
+      min-width: 500px;
+      max-width: 500px;
+    }
+
+    #preview > div > div.image-placeholder {
+      height: 400px;
+    }
+  }
+
+  @media (min-width:  820px) {
+    padding: 10px 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    section .plans {
+      width: fit-content;
+    }
+    #preview {
+      min-width: 300px;
+      max-width: 500px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    padding: 10px 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    section .plans {
+      width: fit-content;
+    }
+    #preview {
+      min-width: 400px;
+      max-width: 300px;
+    }
+  }
 }
 
 header {
