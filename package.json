@@ -23,6 +23,8 @@
     "animate.css": "^4.1.1",
     "boxicons": "^2.1.4",
     "jquery": "^3.7.1",
+    "lottie-web": "^5.12.2",
+    "ngx-lottie": "^12.0.0",
     "ngx-owl-carousel-o": "^18.0.0",
     "owl.carousel": "^2.3.4",
     "rxjs": "~7.8.0",

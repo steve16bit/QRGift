@@ -6,7 +6,7 @@
 </header>
 
 <main>
-  <section>
+  <section *ngIf="!hasId">
     <h1 class="hero-title">Surpreenda alguém nesse natal</h1>
     <p class="description">
       Presenteie quem você ama neste natal. Use o formulário abaixo e receba um
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <form [formGroup]="formGroup" (submit)="onSubmit()">
+    <form [formGroup]="formGroup">
       <div class="input-container">
         <label>De:</label>
         <input formControlName="from" placeholder="Seu nome" type="text" />
@@ -74,14 +74,14 @@
           >
         </div>
       </div> -->
-      <div class="input-container" >
+      <div class="input-container">
         <label>Link YouTube:</label>
         <input
           formControlName="linkYoutube"
           placeholder="Escolha uma linda música"
           type="text"
         />
-        <div
+        <!-- <div
           *ngIf="
             formGroup.get('linkYoutube')?.invalid &&
             formGroup.get('linkYoutube')?.touched
@@ -92,7 +92,7 @@
             *ngIf="formGroup.get('linkYoutube')?.errors?.['required']"
             >Este campo é obrigatório.</span
           >
-        </div>
+        </div> -->
       </div>
       <div class="input-container">
         <label>Ano:</label>
@@ -172,17 +172,16 @@
           <i class="bx bx-microphone"></i>
           Mensagem de audio
         </label>
-       <input
-        formControlName="audio"
-        type="file"
-        accept=".mp3,audio/*;capture=microphone"
-        id="audio"
-        (change)="changeAudio($event)"
-       />
-       <div
+        <input
+          formControlName="audio"
+          type="file"
+          accept=".mp3,audio/*;capture=microphone"
+          id="audio"
+          (change)="changeAudio($event)"
+        />
+        <div
           *ngIf="
-            formGroup.get('audio')?.invalid &&
-            formGroup.get('audio')?.touched
+            formGroup.get('audio')?.invalid && formGroup.get('audio')?.touched
           "
         >
           <span
@@ -193,30 +192,63 @@
         </div>
       </div>
 
-      <button type="submit" class="submit-button" (click)="onSubmit()">Gerar minha página</button>
+      <button type="submit" class="submit-button" (click)="onSubmit()">
+        Gerar minha página
+      </button>
     </form>
   </section>
   <section id="preview">
     <h1>Como ficará sua mensagem</h1>
     <div class="preview-container">
       <h2>Natal de {{ selectedYear || 2001 }}</h2>
-      <div class="image-wrapper" *ngIf="this.imageSrc.length > 0">
+      <div class="image-wrapper" *ngIf="this.imageSrc.length > 0 || this.giftById">
         <img
-          [src]="imageSrc[(currentIndex$ | async) ?? 0]"
+          [src]="!hasId ? imageSrc[(currentIndex$ | async) ?? 0] : this.giftById?.giftWebSiteImages[(currentIndex$ | async) ?? 0]?.url"
           alt="Imagem Atual"
+          cover
         />
       </div>
-      <div class="image-placeholder" *ngIf="this.imageSrc.length === 0"></div>
+      <!-- <div class="image-placeholder" *ngIf="this.imageSrc.length === 0"></div> -->
+
+      <div class="from-to">
+        <div>
+          <b>De: </b>
+          <p>{{ this.formGroup.get("to")?.value ? this.formGroup.get("to")?.value : this.giftById?.giftGiverName }}</p>
+        </div>
+
+        <div>
+          <b>Para: </b>
+          <p>{{ this.formGroup.get("from")?.value ? this.formGroup.get("from")?.value : this.giftById?.receiversName }}</p>
+        </div>
+      </div>
 
       <div class="message-wrapper">
-        <p>{{ message }}</p>
+        <p>{{ message ? message : this.giftById?.message }}</p>
       </div>
+      <video src="{{this.giftById.musicURL}}" autoplay loop></video>
       <div class="audio-wrapper">
-        <audio class="audioPlayer" loop controls>
-          <source src="../../assets/teste.mp3" type="audio/mpeg" />
+        <audio class="audioPlayer" autoplay loop controls>
+          <source src="" type="audio/mpeg" />
           Your browser does not support the audio tag.
         </audio>
       </div>
     </div>
   </section>
+  <!-- <div class="main__container">
+    <ng-lottie 
+        [options]="options" 
+        width="500px" 
+        height="500px" 
+        (animationCreated)="animationCreated($event)" />
+  
+    <button 
+        class="animation__button" 
+        (click)="play()">Play</button>
+    <button 
+        class="animation__button" 
+        (click)="pause()">Pause</button>
+    <button 
+        class="animation__button"
+         (click)="stop()">Stop</button>
+  </div> -->
 </main>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   FormBuilder,
   ReactiveFormsModule,
@@ -13,6 +14,8 @@ import {
 } from '@ng-select/ng-select';
 import { BehaviorSubject } from 'rxjs';
 import { QrGiftApiService } from '../api/qrGiftApi.service';
+import { LottieComponent, type AnimationOptions } from 'ngx-lottie';
+import type { AnimationItem } from 'lottie-web';
 
 @Component({
   selector: 'app-landing',
@@ -23,6 +26,9 @@ import { QrGiftApiService } from '../api/qrGiftApi.service';
     NgLabelTemplateDirective,
     NgOptionTemplateDirective,
     NgSelectComponent,
+    RouterModule,
+    CommonModule,
+    LottieComponent,
   ],
   providers: [QrGiftApiService],
   templateUrl: './landing.component.html',
@@ -46,19 +52,37 @@ export class LandingComponent {
   images: any[] = [];
   errorMessage: string = '';
   audio: any;
+  hasId: boolean = false;
+
+  private animationItem: AnimationItem | undefined;
+
+  options: AnimationOptions = {
+    path: '/assets/animations/globe.json',
+    loop: true,
+    autoplay: false,
+  };
+  giftById: any;
+
+  animationCreated(animationItem: AnimationItem): void {
+    this.animationItem = animationItem;
+  }
 
   get currentIndex$() {
     return this.currentIndexSubject.asObservable();
   }
 
-  constructor(private fb: FormBuilder, private apiService: QrGiftApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: QrGiftApiService,
+    private route: ActivatedRoute
+  ) {
     this.formGroup = this.fb.group({
       from: ['', Validators.required],
       to: ['', Validators.required],
       // email: ['', Validators.required],
       message: ['', Validators.required],
       year: ['', Validators.required],
-      linkYoutube: ['', Validators.required],
+      linkYoutube: ['', null],
       pictures: ['', Validators.required],
       audio: ['', this.selectedPlan === 1 ? null : Validators.required],
     });
@@ -66,6 +90,43 @@ export class LandingComponent {
 
   ngOnInit(): void {
     this.getAllYearsUntilCurrent();
+
+    this.route.params.subscribe((res) => {
+      const id = window.location.pathname.replace('/', '');
+      console.log('res', id); // Log do ID
+      if (id) {
+        this.hasId = true;
+        this.getGiftById(id); // Passa o ID para a função
+      } else {
+        console.log('Nenhum ID encontrado na URL.');
+      }
+    });
+
+    this.carousel();
+  }
+
+  play(): void {
+    if (this.animationItem) {
+      this.animationItem.play();
+    }
+  }
+
+  pause(): void {
+    if (this.animationItem) {
+      this.animationItem.pause();
+    }
+  }
+
+  stop(): void {
+    if (this.animationItem) {
+      this.animationItem.stop();
+    }
+  }
+
+  getGiftById(id: any) {
+    this.apiService.getGift(id).subscribe((res) => {
+      this.giftById = res;
+    });
   }
 
   getAllYearsUntilCurrent() {
@@ -150,11 +211,12 @@ export class LandingComponent {
 
   carousel() {
     setInterval(() => {
-      let totalImages = this.imageSrc.length;
+      let totalImages = this.imageSrc.length > 0  ? this.imageSrc.length : this.giftById.giftWebSiteImages.length;
       let currentIndex = this.currentIndexSubject.value;
 
       if (currentIndex >= totalImages - 1) {
         currentIndex = 0;
+        console.log(currentIndex)
       } else {
         currentIndex += 1;
       }
@@ -162,44 +224,12 @@ export class LandingComponent {
       this.currentIndexSubject.next(currentIndex);
     }, 5000);
   }
-
-  // onSubmit() {
-  //   if (this.formGroup.invalid) {
-  //     this.formGroup.markAllAsTouched();
-  //     return;
-  //   }
-
-  //   let data = {
-  //     ReceiversName: this.formGroup.get('to')?.value,
-  //     GiftGiverName: this.formGroup.get('from')?.value,
-  //     Message: this.formGroup.get('message')?.value,
-  //     AudioMessage: this.audio,
-  //     MusicURL: this.formGroup.get('linkYoutube')?.value,
-  //     PlanTypeId: this.selectedPlan,
-  //     HolidayTypeId: 1,
-  //     GiftWebSiteImages: this.images
-  //   }
-
-  //   this.apiService.postGift(data).subscribe({
-  //     next: (res) => console.log(res),
-  //     error: (error) => console.log(error)
-  //   });
-
-  //   console.log({
-  //     ReceiversName: this.formGroup.get('to')?.value,
-  //     GiftGiverName: this.formGroup.get('from')?.value,
-  //     Message: this.formGroup.get('message')?.value,
-  //     AudioMessage: this.audio,
-  //     MusicURL: this.formGroup.get('linkYoutube')?.value,
-  //     PlanTypeId: this.selectedPlan,
-  //     HolidayTypeId: 1,
-  //     GiftWebSiteImages: this.images
-  //   });
-  // }
+  
   onSubmit() {
+    //TODO: LIMPAR CAMPO DE AUDIO CASO O PLANO SEJA BASIC
     if (this.formGroup.invalid) {
-        this.formGroup.markAllAsTouched();
-        return;
+      this.formGroup.markAllAsTouched();
+      return;
     }
 
     const formData = new FormData();
@@ -209,16 +239,15 @@ export class LandingComponent {
     formData.append('Message', this.formGroup.get('message')?.value);
     formData.append('AudioMessage', this.audio); // Supondo que `audio` é um array de arquivos
     formData.append('MusicURL', this.formGroup.get('linkYoutube')?.value);
-    formData.append('PlanTypeId', this.selectedPlan === 1 ? 'fPc2A1kLIdhdBFKPXyfz' : 'tGgt5gMYGomx5Ld1UfA');
+    formData.append(
+      'PlanTypeId',
+      this.selectedPlan === 1 ? 'fPc2A1kLIdhdBFKPXyfz' : 'tGgt5gMYGomx5Ld1UfA'
+    );
     formData.append('HolidayTypeId', 'lAj5OCzjdTMGTHrTDOiE'); // Se você tiver um ID fixo ou precisar ajustar
-    this.images.forEach((image: File, index) => {
+    this.images.forEach((image: File) => {
       formData.append('GiftWebSiteImages', image);
     }); // Aqui é onde você adiciona as imagens
 
-    this.apiService.postGift(formData).subscribe({
-        next: (res) => console.log(res),
-        error: (error) => console.log(error)
-    });
-}
-
+    this.apiService.postGift(formData).subscribe((res) => console.log(res));
+  }
 }

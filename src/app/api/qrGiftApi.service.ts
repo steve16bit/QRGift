@@ -15,4 +15,8 @@ export class QrGiftApiService {
   postGift(data: any): Observable<any> {
     return this.httpClient.post<any>(`${this.apiUrl}/GiftWebSite`, data)
   }
+
+  getGift(id: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.apiUrl}/GiftWebSite/${id}`)
+  }
 }
